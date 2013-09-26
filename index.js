@@ -3,6 +3,10 @@
    async = require('../../src/node_modules/async'),
 settings = require('../../src/node/utils/Settings');
 
+//Settings -- EDIT THESE IN settings.json not here..
+var pluginSettings = settings.ep_email_notifications;
+var urlToPads = (pluginSettings && pluginSettings.urlToPads)?pluginSettings.urlToPads:"http://beta.etherpad.org/p/";
+  
 // Remove cache for this procedure
 db['dbSettings'].cache = 0;
 
@@ -15,7 +19,7 @@ exports.registerRoute = function (hook_name, args, callback) {
     var param = path[3].split("=");
     var action = param[0];
     var actionId = param[1];
-    var padURL = req.protocol + "://" + req.get('host') + "/p/" +padId;
+    var padURL = urlToPads +padId;
 
     async.waterfall(
       [
@@ -214,9 +218,9 @@ function sendContent(res, args, action, padId, padURL, resultDb) {
   console.debug("starting sendContent: args ->", action, " / ", padId, " / ", padURL, " / ", resultDb);
 
   if (action == 'subscribe') {
-    var actionMsg = "Subscribing '" + resultDb.email + "' to pad " + padId;
+    var actionMsg = "Subscribing '" + resultDb.email + "' to pad " + padId.split(".")[3];
   } else {
-    var actionMsg = "Unsubscribing '" + resultDb.email + "' from pad " + padId;
+    var actionMsg = "Unsubscribing '" + resultDb.email + "' from pad " + padId.split(".")[3];
   }
   var msgCause, resultMsg, classResult;
 

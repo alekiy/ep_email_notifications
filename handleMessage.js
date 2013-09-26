@@ -187,7 +187,7 @@ exports.subscriptionEmail = function (context, email, emailFound, userInfo, padI
     // Send mail to user with the link for validation
     server.send(
       {
-        text:    "Please click on this link in order to validate your subscription to the pad " + padId + "\n" + urlToPads+padId + "/subscribe=" + subscribeId,
+        text:    "Please click on this link in order to validate your subscription to the pad " + padId.split(".")[3] + "\n\n" + urlToPads+padId + "/subscribe=" + subscribeId,
         from:    fromName+ "<"+fromEmail+">",
         to:      userInfo.email,
         subject: "Email subscription confirmation for pad "+padId
@@ -257,7 +257,7 @@ exports.unsubscriptionEmail = function (context, emailFound, userInfo, padId) {
     // Send mail to user with the link for validation
     server.send(
       {
-        text:    "Please click on this link in order to validate your unsubscription to the pad " + padId + "\n" + urlToPads+padId + "/unsubscribe=" + unsubscribeId,
+        text:    "Please click on this link in order to validate your unsubscription to the pad " + padId.split(".")[3] + "\n\n" + urlToPads+padId + "/unsubscribe=" + unsubscribeId,
         from:    fromName+ "<"+fromEmail+">",
         to:      userInfo.email,
         subject: "Email unsubscription confirmation for pad "+padId
